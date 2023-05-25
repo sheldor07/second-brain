@@ -1,20 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import 'expo-dev-client';
+import Whisper from 'whisper.rn';
 
-export default function App() {
+const App = () => {
+  const [text, setText] = useState('');
+
+  const onTranscriptionResult = (result) => {
+    setText(result.text);
+  };
+
+  const startTranscription = () => {
+    Whisper.startTranscription();
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <div>
+      <h1>Speech to Text</h1>
+      <p>{text}</p>
+      <button onClick={startTranscription}>Start Transcription</button>
+    </div>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
